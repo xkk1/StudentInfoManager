@@ -19,7 +19,8 @@ public class changeStudentPostJson extends HttpServlet {
     private String msg = "";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        io.github.xkk1.Student student = null;
+        io.github.xkk1.Student student;
+
         try {
             request.setCharacterEncoding("UTF-8"); // 获取请求 body 数据，先设置编码
             InputStream is = request.getInputStream();
@@ -56,6 +57,10 @@ public class changeStudentPostJson extends HttpServlet {
                 // 关闭数据库连接对象
                 conn.close();
                 // 为sql语句中第一个问号赋值
+            } else {
+                if (!"".equals(student.getMsg())) {
+                    this.msg = student.getMsg();
+                }
             }
         } catch (Exception e) {
             this.msg = "服务器错误！\n" + Arrays.toString(e.getStackTrace());

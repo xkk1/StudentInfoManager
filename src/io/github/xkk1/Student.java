@@ -1,13 +1,19 @@
 package io.github.xkk1;
 
 public class Student {
+    private String id;
     private String name;
     private String age;
-
-    private String msg;
+   public String msg;
 
     public Student() {
         this.name = "";
+        this.age = "0";
+        this.msg = "";
+    }
+
+    public Student(String name) {
+        this.name = name;
         this.age = "0";
         this.msg = "";
     }
@@ -49,6 +55,22 @@ public class Student {
         this.age = age;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     public boolean verify(Student student) {
         if ("".equals(student.getName())) {
             this.msg = "学生姓名不能为空！";
@@ -66,6 +88,24 @@ public class Student {
             }
         } catch (NumberFormatException e) {
             this.msg = "学生年龄不合法！";
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verifyId(Student studentId) {
+        if ("".equals(studentId.getId())) {
+            this.msg = "学生ID不能为空！";
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(studentId.getId());
+            if (i < 0) {
+                this.msg = "学生ID不能为负数！";
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            this.msg = "学生ID不合法！";
             return false;
         }
         return true;

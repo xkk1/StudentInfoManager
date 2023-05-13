@@ -40,7 +40,7 @@ public class AddStudentServlet extends HttpServlet {
                 response.sendRedirect("../index_old.jsp");
                 return;
             }
-            Integer age = null;
+            int age;
             try {
                 age = Integer.parseInt(ageStr);
             } catch (NumberFormatException e) {

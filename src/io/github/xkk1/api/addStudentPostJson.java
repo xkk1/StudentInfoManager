@@ -2,7 +2,6 @@ package io.github.xkk1.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +13,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
-import java.util.Map;
 
 @WebServlet("/api/addStudentPostJson")
 public class addStudentPostJson extends HttpServlet {
     private String msg = "";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        io.github.xkk1.Student student = null;
+        io.github.xkk1.Student student;
         try {
             request.setCharacterEncoding("UTF-8"); // 获取请求 body 数据，先设置编码
             InputStream is = request.getInputStream();
@@ -58,12 +56,15 @@ public class addStudentPostJson extends HttpServlet {
                 // 关闭数据库连接对象
                 conn.close();
                 // 为sql语句中第一个问号赋值
+            } else {
+                if (!"".equals(student.getMsg())) {
+                    this.msg = student.getMsg();
+                }
             }
-
 //            String json = "{\n" +
 //                    "\t\"userId\": 1,\n" +
-//                    "\t\"userName\": \"pan_junbiao的博客\",\n" +
-//                    "\t\"blogUrl\": \" https: //blog.csdn.net/pan_junbiao\",\n" +
+//                    "\t\"userName\": \"xxx的博客\",\n" +
+//                    "\t\"blogUrl\": \" https: //blog.xxx.com/",\n" +
 //                    "\t\"sex\": \"男\"\n" +
 //                    "}";
 //
