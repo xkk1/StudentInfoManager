@@ -90,22 +90,36 @@ public class Student {
             this.msg = "学生年龄不合法！";
             return false;
         }
+        if ("".equals(student.getId())) {
+            this.msg = "学号不能为空！";
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(student.getId());
+            if (i < 0) {
+                this.msg = "学号不能为负数！";
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            this.msg = "学号不合法！";
+            return false;
+        }
         return true;
     }
 
     public boolean verifyId(Student studentId) {
         if ("".equals(studentId.getId())) {
-            this.msg = "学生ID不能为空！";
+            this.msg = "学号不能为空！";
             return false;
         }
         try {
             int i = Integer.parseInt(studentId.getId());
             if (i < 0) {
-                this.msg = "学生ID不能为负数！";
+                this.msg = "学号不能为负数！";
                 return false;
             }
         } catch (NumberFormatException e) {
-            this.msg = "学生ID不合法！";
+            this.msg = "学号不合法！";
             return false;
         }
         return true;

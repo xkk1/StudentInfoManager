@@ -29,6 +29,7 @@ public class GetStudentsInfo {
                 studentInfo.add(String.valueOf(rs.getInt("age")));
                 studentsInfo.add(studentInfo);
             }
+            conn.close();
             return studentsInfo;
         } catch (Exception e) {
             List<List<String>> studentsInfo = new ArrayList<>();

@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Arrays;
 
 @WebServlet("/api/addStudentPostJson")
@@ -40,22 +38,33 @@ public class addStudentPostJson extends HttpServlet {
                 String password = "123456";
                 // 建立数据库连接，获得连接对象conn
                 Connection conn = DriverManager.getConnection(url, user, password);
-                String sql = "INSERT INTO studentinfo (name, age) VALUES (?, ?)"; // 生成一条sql语句
-                // 创建一个 Statement 对象
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, student.getName());
-                // 为sql语句中第二个问号赋值
-                ps.setInt(2, Integer.parseInt(student.getAge()));
-                // 执行sql语句
-                // 执行sql语句
-                if(ps.executeUpdate() != 1) {
-                    this.msg = "500错误 操作数据库失败!";
+                String sql1 = "SELECT id FROM StudentInfo WHERE id=?"; // 生成一条 sql 语句
+                PreparedStatement ps = conn.prepareStatement(sql1);
+                ps.setInt(1, Integer.parseInt(student.getId()));
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    this.msg = "添加学生失败！不能添加相同学号的学生！";
+                    // 关闭数据库连接对象
+                    conn.close();
                 } else {
-                    this.msg = "success";
+                    /* 上查询 下增加 */
+                    String sql2 = "INSERT INTO studentinfo (id, name, age) VALUES (?, ?, ?)"; // 注册 sql 语句
+                    // 创建一个 Statement 对象
+                    ps = conn.prepareStatement(sql2); // .toString()
+                    ps.setInt(1, Integer.parseInt(student.getId()));
+                    ps.setString(2, student.getName());
+                    // 为sql语句中第二个问号赋值
+                    ps.setInt(3, Integer.parseInt(student.getAge()));
+                    // 执行sql语句
+                    if (ps.executeUpdate() != 1) {
+                        this.msg = "500错误 操作数据库失败!";
+                    } else {
+                        this.msg = "success";
+                    }
+                    // 关闭数据库连接对象
+                    conn.close();
+                    // 为sql语句中第一个问号赋值
                 }
-                // 关闭数据库连接对象
-                conn.close();
-                // 为sql语句中第一个问号赋值
             } else {
                 if (!"".equals(student.getMsg())) {
                     this.msg = student.getMsg();

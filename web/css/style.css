@@ -146,9 +146,6 @@ html {
 .main table tbody tr:hover{
     background-color: #ccc;
 }
-.main table tbody tr td:first-child{
-    font-weight: bold;
-}
 .main button {
     color: #f8f8f8;
     background: #32c682;

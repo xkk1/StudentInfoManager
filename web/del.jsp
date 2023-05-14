@@ -36,7 +36,7 @@
      <table id="show-students-info-table">
        <thead>
        <tr>
-         <th>ID</th>
+         <th>学号</th>
          <th>姓名</th>
          <th>年龄</th>
          <th>操作</th>

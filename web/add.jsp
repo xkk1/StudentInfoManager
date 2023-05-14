@@ -26,8 +26,9 @@
     <main class="main">
         <h2>增加学生</h2>
         <%-- Add New Student --%>
-        <label for="name">姓名：</label><input type="text" id="name" name="name"> <br />
-        <label for="age">年龄：</label><input type="text" id="age" name="age"> <br />
+        <label for="id">学号：</label> <input type="text" id="id" name="id"> <br />
+        <label for="name">姓名：</label> <input type="text" id="name" name="name"> <br />
+        <label for="age">年龄：</label> <input type="text" id="age" name="age"> <br />
         <input type="submit" value="增加学生" id="add-student-button">
     </main>
     <footer class="footer">
@@ -39,9 +40,11 @@
             Notiflix.Loading.dots('等待服务器的回应……', {
                 clickToClose: true,
             });
+            let id = document.querySelector("#id");
             let name = document.querySelector("#name");
             let age = document.querySelector("#age");
             let json = {
+                id: id.value,
                 name: name.value, // 键为username，值为对象的value属性
                 age: age.value,
             };
@@ -86,6 +89,7 @@
                     '确定',
                 );
             } else {
+                console.log(resp);
                 Notiflix.Report.failure(
                     '添加学生失败',
                     resp,
