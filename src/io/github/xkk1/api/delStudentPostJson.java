@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 @WebServlet("/api/delStudentPostJson")
 public class delStudentPostJson extends HttpServlet {
@@ -38,19 +39,30 @@ public class delStudentPostJson extends HttpServlet {
                 String password = "123456";
                 // 建立数据库连接，获得连接对象conn
                 Connection conn = DriverManager.getConnection(url, user, password);
-                String sql = "DELETE FROM studentinfo WHERE id = ?"; // 生成一条sql语句
-                // 创建一个 Statement 对象
-                PreparedStatement ps = conn.prepareStatement(sql);
+                // 查询此学生是否存在
+                String sql1 = "SELECT id FROM StudentInfo WHERE id=?"; // 生成一条 sql 语句
+                PreparedStatement ps = conn.prepareStatement(sql1);
                 ps.setInt(1, Integer.parseInt(studentId.getId()));
-                // 执行sql语句
-                if(ps.executeUpdate() != 1) {
-                    this.msg = "500错误 操作数据库失败!";
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) {
+                    this.msg = "删除学生失败！没有学号为“" + studentId.getId() + "”的学生！";
+                    // 关闭数据库连接对象
+                    conn.close();
                 } else {
-                    this.msg = "success";
+                    String sql2 = "DELETE FROM studentinfo WHERE id = ?"; // 生成一条sql语句
+                    // 创建一个 Statement 对象
+                    ps = conn.prepareStatement(sql2);
+                    ps.setInt(1, Integer.parseInt(studentId.getId()));
+                    // 执行sql语句
+                    if (ps.executeUpdate() != 1) {
+                        this.msg = "500错误 操作数据库失败!";
+                    } else {
+                        this.msg = "success";
+                    }
+                    // 关闭数据库连接对象
+                    conn.close();
+                    // 为sql语句中第一个问号赋值
                 }
-                // 关闭数据库连接对象
-                conn.close();
-                // 为sql语句中第一个问号赋值
             } else {
                 if (!"".equals(studentId.getMsg())) {
                     this.msg = studentId.getMsg();
