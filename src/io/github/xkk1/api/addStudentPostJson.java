@@ -40,7 +40,8 @@ public class addStudentPostJson extends HttpServlet {
                 Connection conn = DriverManager.getConnection(url, user, password);
                 String sql1 = "SELECT id FROM StudentInfo WHERE id=?"; // 生成一条 sql 语句
                 PreparedStatement ps = conn.prepareStatement(sql1);
-                ps.setInt(1, Integer.parseInt(student.getId()));
+                // ps.setInt(1, Integer.parseInt(student.getId()));
+                ps.setString(1,student.getId());
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     this.msg = "添加学生失败！不能添加相同学号的学生！";
@@ -51,7 +52,9 @@ public class addStudentPostJson extends HttpServlet {
                     String sql2 = "INSERT INTO studentinfo (id, name, age) VALUES (?, ?, ?)"; // 注册 sql 语句
                     // 创建一个 Statement 对象
                     ps = conn.prepareStatement(sql2); // .toString()
-                    ps.setInt(1, Integer.parseInt(student.getId()));
+                    // ps.setInt(1, Integer.parseInt(student.getId()));
+                    // ps.setLong(1, Long.parseLong(student.getId()));
+                    ps.setString(1, student.getId());
                     ps.setString(2, student.getName());
                     // 为sql语句中第二个问号赋值
                     ps.setInt(3, Integer.parseInt(student.getAge()));

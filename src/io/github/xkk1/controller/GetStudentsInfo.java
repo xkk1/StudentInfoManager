@@ -24,7 +24,8 @@ public class GetStudentsInfo {
             List<List<String>> studentsInfo = new ArrayList<>();
             while (rs.next()) {
                 List<String> studentInfo = new ArrayList<>();
-                studentInfo.add(String.valueOf(rs.getInt("id")));
+                // studentInfo.add(String.valueOf(rs.getInt("id")));
+                studentInfo.add(String.valueOf(rs.getString("id")));
                 studentInfo.add(rs.getString("name"));
                 studentInfo.add(String.valueOf(rs.getInt("age")));
                 studentsInfo.add(studentInfo);
