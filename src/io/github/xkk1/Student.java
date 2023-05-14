@@ -72,8 +72,26 @@ public class Student {
     }
 
     public boolean verify(Student student) {
+        if ("".equals(student.getId())) {
+            this.msg = "学号不能为空！";
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(student.getId());
+            if (i < 0) {
+                this.msg = "学号不能为负数！";
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            this.msg = "学号不合法！";
+            return false;
+        }
         if ("".equals(student.getName())) {
             this.msg = "学生姓名不能为空！";
+            return false;
+        }
+        if (student.getName().length() > 25) {
+            this.msg = "学生姓名过长！";
             return false;
         }
         if ("".equals(student.getAge())) {
@@ -88,20 +106,6 @@ public class Student {
             }
         } catch (NumberFormatException e) {
             this.msg = "学生年龄不合法！";
-            return false;
-        }
-        if ("".equals(student.getId())) {
-            this.msg = "学号不能为空！";
-            return false;
-        }
-        try {
-            int i = Integer.parseInt(student.getId());
-            if (i < 0) {
-                this.msg = "学号不能为负数！";
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            this.msg = "学号不合法！";
             return false;
         }
         return true;
