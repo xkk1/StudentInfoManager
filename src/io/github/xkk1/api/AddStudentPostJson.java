@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.Arrays;
 
 @WebServlet("/api/addStudentPostJson")
-public class addStudentPostJson extends HttpServlet {
+public class AddStudentPostJson extends HttpServlet {
     private String msg = "";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

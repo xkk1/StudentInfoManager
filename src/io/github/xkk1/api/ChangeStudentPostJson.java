@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.util.Arrays;
 
 @WebServlet("/api/changeStudentPostJson")
-public class changeStudentPostJson extends HttpServlet {
+public class ChangeStudentPostJson extends HttpServlet {
     private String msg = "";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

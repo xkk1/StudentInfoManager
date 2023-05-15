@@ -17,7 +17,7 @@
             <ul>
                 <li><a href="add.jsp">增加学生</a></li>
                 <li><a href="del.jsp">删除学生</a></li>
-                <li><a href="check.jsp">查找学生</a></li>
+                <li><a href="search.jsp">查找学生</a></li>
                 <li><a href="change.jsp">更改学生</a></li>
             </ul>
         </nav>

@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 @WebServlet("/api/delStudentPostJson")
-public class delStudentPostJson extends HttpServlet {
+public class DelStudentPostJson extends HttpServlet {
     private String msg = "";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
