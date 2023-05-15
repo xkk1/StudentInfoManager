@@ -81,7 +81,7 @@
       );
     }
     function ajax_submit_del_student_from_id(id) {
-      if (id == null) {
+      if (id == null || id === "") {
         Notiflix.Report.failure('删除学生失败','未提供学号！','确定',);
         return;
       } else if (Number(id) !== Number(id)) {

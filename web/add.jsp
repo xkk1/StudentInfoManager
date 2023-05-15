@@ -37,16 +37,17 @@
     <script>
         document.querySelector("#add-student-button").addEventListener("click", ajax_submit);
         function ajax_submit(){
+            let id = document.querySelector("#id").value;
+            let name = document.querySelector("#name").value;
+            let age = document.querySelector("#age").value;
+
             Notiflix.Loading.dots('等待服务器的回应……', {
                 clickToClose: true,
             });
-            let id = document.querySelector("#id");
-            let name = document.querySelector("#name");
-            let age = document.querySelector("#age");
             let json = {
-                id: id.value,
-                name: name.value, // 键为username，值为对象的value属性
-                age: age.value,
+                id: id,
+                name: name,
+                age: age,
             };
             ajax({
                 url: "api/addStudentPostJson",

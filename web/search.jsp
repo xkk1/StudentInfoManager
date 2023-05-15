@@ -79,7 +79,7 @@
         document.querySelector("#search-student-button").addEventListener("click", go_search);
         function go_search() {
             let id = document.querySelector("#id").value;
-            if (id == null) {
+            if (id == null || id === "") {
                 Notiflix.Report.failure('查找学生失败','未提供学号！','确定',);
                 return;
             } else if (Number(id) !== Number(id)) {
