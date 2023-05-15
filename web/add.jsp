@@ -27,7 +27,7 @@
         <h2>增加学生</h2>
         <%-- Add New Student --%>
         <label for="id">学号：</label> <input type="text" id="id" name="id"> <br />
-        <label for="name">姓名：</label> <input type="text" id="name" name="name"> <br />
+        <label for="name">姓名：</label> <input type="text" id="name" name="name" maxlength="24"> <br />
         <label for="age">年龄：</label> <input type="text" id="age" name="age"> <br />
         <input type="submit" value="增加学生" id="add-student-button">
     </main>
@@ -40,7 +40,30 @@
             let id = document.querySelector("#id").value;
             let name = document.querySelector("#name").value;
             let age = document.querySelector("#age").value;
-
+            if (id == null || id === "") {
+                Notiflix.Report.failure('添加学生失败','未提供学号！','确定',);
+                return;
+            } else if (Number(id) !== Number(id)) {
+                Notiflix.Report.failure('添加学生失败','非法的学号！','确定',);
+                return;
+            } else if (id < 0) {
+                Notiflix.Report.failure('添加学生失败','学号不能为负数！','确定',);
+                return;
+            }
+            if (name == null || name === "") {
+                Notiflix.Report.failure('添加学生失败','未提供学生姓名！','确定',);
+                return;
+            }
+            if (age == null || age === "") {
+                Notiflix.Report.failure('添加学生失败','未提供年龄！','确定',);
+                return;
+            } else if (Number(age) !== Number(age)) {
+                Notiflix.Report.failure('添加学生失败','非法的年龄！','确定',);
+                return;
+            } else if (age < 0) {
+                Notiflix.Report.failure('添加学生失败','年龄不能为负数！','确定',);
+                return;
+            }
             Notiflix.Loading.dots('等待服务器的回应……', {
                 clickToClose: true,
             });
