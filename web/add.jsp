@@ -43,11 +43,8 @@
             if (id == null || id === "") {
                 Notiflix.Report.failure('添加学生失败','未提供学号！','确定',);
                 return;
-            } else if (Number(id) !== Number(id)) {
-                Notiflix.Report.failure('添加学生失败','非法的学号！','确定',);
-                return;
-            } else if (id < 0) {
-                Notiflix.Report.failure('添加学生失败','学号不能为负数！','确定',);
+            } else if (! /^\d*$/.test(id)) {
+                Notiflix.Report.failure('添加学生失败', '非法的学号！学号只能是非负整数！', '确定',);
                 return;
             }
             if (name == null || name === "") {

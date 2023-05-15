@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
 
 @WebServlet("/api/delStudentPostJson")
 public class DelStudentPostJson extends HttpServlet {
@@ -42,7 +43,7 @@ public class DelStudentPostJson extends HttpServlet {
                 // 查询此学生是否存在
                 String sql1 = "SELECT id FROM StudentInfo WHERE id=?"; // 生成一条 sql 语句
                 PreparedStatement ps = conn.prepareStatement(sql1);
-                ps.setInt(1, Integer.parseInt(studentId.getId()));
+                ps.setString(1, studentId.getId());
                 ResultSet rs = ps.executeQuery();
                 if (!rs.next()) {
                     this.msg = "删除学生失败！没有学号为“" + studentId.getId() + "”的学生！";
@@ -52,7 +53,7 @@ public class DelStudentPostJson extends HttpServlet {
                     String sql2 = "DELETE FROM studentinfo WHERE id = ?"; // 生成一条sql语句
                     // 创建一个 Statement 对象
                     ps = conn.prepareStatement(sql2);
-                    ps.setInt(1, Integer.parseInt(studentId.getId()));
+                    ps.setString(1, studentId.getId());
                     // 执行sql语句
                     if (ps.executeUpdate() != 1) {
                         this.msg = "500错误 操作数据库失败!";
@@ -86,7 +87,7 @@ public class DelStudentPostJson extends HttpServlet {
 //            out.flush();
 //            out.close();
         } catch (Exception e) {
-            this.msg = "服务器错误！";
+            this.msg = "服务器错误！" + Arrays.toString(e.getStackTrace());
         }
         // 返回结果
         response.setCharacterEncoding("UTF-8");

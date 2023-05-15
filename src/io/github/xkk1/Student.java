@@ -1,6 +1,7 @@
 package io.github.xkk1;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class Student {
     private String id;
@@ -119,8 +120,8 @@ public class Student {
             return false;
         }
         try {
-            int i = Integer.parseInt(studentId.getId());
-            if (i < 0) {
+            // int i = Integer.parseInt(student.getId());
+            if ((new BigInteger(studentId.getId()).compareTo(new BigInteger("0"))) < 0) {
                 this.msg = "学号不能为负数！";
                 return false;
             }
