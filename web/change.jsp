@@ -39,7 +39,7 @@
          <th>学号</th>
          <th>姓名</th>
          <th>年龄</th>
-         <th>操作（还没实现）</th>
+         <th>操作</th>
        </tr>
        </thead>
        <%
@@ -56,7 +56,9 @@
              <td>${StudentInfo[0]}</td>
              <td>${StudentInfo[1]}</td>
              <td>${StudentInfo[2]}</td>
-             <td><button onclick="delStudent(['${StudentInfo[0]}','${StudentInfo[1]}'])">删除</button>&ensp;<button>修改</button></td>
+             <td><button onclick="delStudent(['${StudentInfo[0]}','${StudentInfo[1]}'])">删除</button>&ensp;
+                 <button onclick="changeStudent(['${StudentInfo[0]}','${StudentInfo[1]}','${StudentInfo[2]}'])">修改</button>
+             </td>
            </tr>
          </c:forEach>
        </tbody>
@@ -101,8 +103,67 @@
         contentType: "application/json",
         // JSON.stringify(json) 是将一个json对象序列化成一个字符串，格式是json格式
         body: JSON.stringify(json),
-        callback: verify_response
+        callback: verify_response1
       });
+    }
+
+    function changeStudent(StudentInfo) {
+        var NewStudentInfo = ["","","", StudentInfo[0]];
+        NewStudentInfo[0] = prompt("请输入新的学号：", StudentInfo[0]);
+        if (NewStudentInfo[0] == null || NewStudentInfo[0] === "") {
+            return;
+        }
+        NewStudentInfo[1] = prompt("请输入新的姓名：", StudentInfo[1]);
+        if (NewStudentInfo[1] == null || NewStudentInfo[1] === "") {
+            return;
+        }
+        NewStudentInfo[2] = prompt("请输入新的年龄：", StudentInfo[2]);
+        if (NewStudentInfo[2] == null || NewStudentInfo[2] === "") {
+            return;
+        }
+        ajax_submit_new_student_info(NewStudentInfo);
+        // Notiflix.Confirm.prompt(
+        //     '更改学生信息：','请输入新的学号：',StudentInfo[0],'确认','取消',
+        //     (clientAnswer) => {
+        //         NewStudentInfo[0] = clientAnswer;
+        //         Notiflix.Confirm.prompt(
+        //             '更改学生信息：','请输入新的姓名：',StudentInfo[1],'确认','取消',
+        //             (clientAnswer) => {
+        //                 NewStudentInfo[1] = clientAnswer;
+        //                 Notiflix.Confirm.prompt(
+        //                     '更改学生信息：','请输入新的年龄：',StudentInfo[2],'确认','取消',
+        //                     (clientAnswer) => {
+        //                         NewStudentInfo[2] = clientAnswer;
+        //                         ajax_submit_new_student_info(NewStudentInfo);
+        //                     },
+        //                     (clientAnswer) => {},{},
+        //                 );
+        //             },
+        //             (clientAnswer) => {},{},
+        //         );
+        //     },
+        //     (clientAnswer) => {},{},
+        // );
+    }
+    function ajax_submit_new_student_info(NewStudentInfo) {
+        Notiflix.Loading.dots('等待服务器的回应……', {
+            clickToClose: true,
+        });
+        let json = {
+            id: NewStudentInfo[0], // 键为id，值为 id
+            name: NewStudentInfo[1],
+            age: NewStudentInfo[2],
+            oldId: NewStudentInfo[3],
+        };
+        ajax({
+            url: "api/changeStudentPostJson",
+            method: "post",
+            //body上为 json格式的字符串
+            contentType: "application/json",
+            // JSON.stringify(json) 是将一个json对象序列化成一个字符串，格式是json格式
+            body: JSON.stringify(json),
+            callback: verify_response2
+        });
     }
     function ajax(args){//var ajax = function(){}
       let xhr = new XMLHttpRequest();
@@ -126,7 +187,7 @@
         xhr.send();
       }
     }
-    function verify_response(status, resp) {
+    function verify_response1(status, resp) {
       Notiflix.Loading.remove();
       if (resp == "success") {
         Notiflix.Report.success(
@@ -144,6 +205,25 @@
                 '确定',
         );
       }
+    }
+    function verify_response2(status, resp) {
+        Notiflix.Loading.remove();
+        if (resp == "success") {
+            Notiflix.Report.success(
+                '更改成功',
+                "更改学生信息成功！",
+                '确定',
+                () => {
+                    location.reload();
+                }
+            );
+        } else {
+            Notiflix.Report.failure(
+                '更改学生信息失败',
+                resp,
+                '确定',
+            );
+        }
     }
   </script>
   <footer class="footer">

@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 public class Student {
     private String id;
+    private String oldId;
     private String name;
     private String age;
    public String msg;
@@ -66,6 +67,14 @@ public class Student {
         this.id = id;
     }
 
+    public String getOldId() {
+        return oldId;
+    }
+
+    public void setOldId(String oldId) {
+        this.oldId = oldId;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -122,6 +131,39 @@ public class Student {
         try {
             // int i = Integer.parseInt(student.getId());
             if ((new BigInteger(studentId.getId()).compareTo(new BigInteger("0"))) < 0) {
+                this.msg = "学号不能为负数！";
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            this.msg = "学号不合法！";
+            return false;
+        }
+        return true;
+    }
+    public boolean verifyOldId(Student student) {
+        if ("".equals(student.getOldId())) {
+            this.msg = "旧学号不能为空！";
+            return false;
+        }
+        try {
+            // int i = Integer.parseInt(student.getId());
+            if ((new BigInteger(student.getOldId()).compareTo(new BigInteger("0"))) < 0) {
+                this.msg = "旧学号不能为负数！";
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            this.msg = "旧学号不合法！";
+            return false;
+        }
+        if ("".equals(student.getId())) {
+            // this.msg = "学号不能为空！";
+            // return false;
+            // 没填新学号时使用旧学号
+            student.setId(student.getOldId());
+        }
+        try {
+            // int i = Integer.parseInt(student.getId());
+            if ((new BigInteger(student.getId()).compareTo(new BigInteger("0"))) < 0) {
                 this.msg = "学号不能为负数！";
                 return false;
             }

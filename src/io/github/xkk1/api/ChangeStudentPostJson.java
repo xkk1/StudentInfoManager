@@ -44,20 +44,21 @@ public class ChangeStudentPostJson extends HttpServlet {
                 Connection conn = DriverManager.getConnection(url, user, password);
                 String sql1 = "SELECT id FROM StudentInfo WHERE id=?"; // 生成一条 sql 语句
                 PreparedStatement ps = conn.prepareStatement(sql1);
-                ps.setString(1,student.getId());
+                ps.setString(1,student.getOldId());
                 ResultSet rs = ps.executeQuery();
                 if (!rs.next()) {
                     this.msg = "修改学生信息失败！不能修改学号不存在的学生！";
                     // 关闭数据库连接对象
                     conn.close();
                 } else {
-                    String sql2 = "INSERT INTO studentinfo (id, name, age) VALUES (?, ?)"; // 生成一条sql语句
+                    String sql2 = "UPDATE studentinfo t SET t.id = ?, t.name = ?, t.age = ? WHERE t.id = ?"; // 生成一条sql语句
                     // 创建一个 Statement 对象
                     ps = conn.prepareStatement(sql2);
-                    ps.setString(1, student.getName());
+                    ps.setString(1, student.getId());
+                    ps.setString(2, student.getName());
                     // 为sql语句中第二个问号赋值
-                    ps.setInt(2, Integer.parseInt(student.getAge()));
-                    // 执行sql语句
+                    ps.setInt(3, Integer.parseInt(student.getAge()));
+                    ps.setString(4, student.getOldId());
                     // 执行sql语句
                     if (ps.executeUpdate() != 1) {
                         this.msg = "500错误 操作数据库失败!";
